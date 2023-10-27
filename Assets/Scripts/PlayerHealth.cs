@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 public class PlayerHealth : MonoBehaviour
 {
     private Animator animator;
@@ -17,92 +18,84 @@ public class PlayerHealth : MonoBehaviour
     public float hurtDelay = 2f;
 
     private InputTest inputTestInstance;
+    private GameManager gameManager;
 
-
-
-
-
-
-
-    void Start()
+    void Awake()
 
     {
+        Cursor.lockState = CursorLockMode.Locked;
         animator = GetComponent<Animator>();
+        gameManager = FindAnyObjectByType<GameManager>();
 
         health = 100;
-
-
         mana = 100;
+        stamina = 100;
+        gameManager.UpdateHealth(health);
+        gameManager.UpdateMana(mana);
+
         inputTestInstance = GetComponent<InputTest>();
+
         if (inputTestInstance != null)
         {
             inputTestInstance.SpellUsedEvent += SpellUsed;
         }
 
 
-        stamina = 100;
-
-        Debug.Log("Current health is " + health + " Current mana is: " + mana + " Current stamina is: " + stamina);
-
-        
-
-
-        
-    }
-
-    void Update()
-    {
-
+        //Displays a message on the console about the initial value of health, mana and stamina:
+        /*
+        Debug.Log("<b><size=14>Current health is: <color=green>" + health +
+            "</color> Current mana is: <color=blue>" + mana + "</color> Current stamina is: <color=orange>" +
+            stamina + "</color></size></b>");
+        */
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-
-        if (hit.gameObject.CompareTag("Target"))
-
+        int damage;
+        if (hit.gameObject.CompareTag("Target") && canBeHurt)
         {
-            if (canBeHurt)
-
-            {
-                StartCoroutine(canBeHurtDelay());
-            }
-
-            
+            damage = 25;
+            StartCoroutine(canBeHurtDelay(damage));
+        }
+        else if (hit.gameObject.CompareTag("DeathZone") && canBeHurt)
+        {            
+            damage = health;
+            StartCoroutine(canBeHurtDelay(damage));
         }
 
-       
+
+
     }
 
 
-    public IEnumerator canBeHurtDelay()
+    public IEnumerator canBeHurtDelay(int damage)
     {
         if (health > 0)
         {
+            //Debug.Log("<b><size=14>Damage Taken: <color=red>25</color></size></b>");
 
             canBeHurt = false;
 
-            health -= 25;
+            health -= damage;
 
-            Debug.Log("Damage Taken: 25 ");
+            //Debug.Log("<b><size=14>Current health is <color=green>" + health + "</color></size></b>");
 
-            Debug.Log("Current health is " + health);
+            if (health <= 0)
 
+            {
+
+                //Debug.Log("<b><size=14>Current health is <color=green>" + health + "</color></size></b>");
+                //Debug.Log("<b><size=14><color=maroon>You are DEAD.</color></size></b>");
+                animator.SetBool("Death", true);
+                ThirdPersonController thirdPersonController = GetComponent<ThirdPersonController>();
+                thirdPersonController.movementEnabled = false;
+                gameManager.GameOver();
+
+            }
+            gameManager.UpdateHealth(health);
             yield return new WaitForSeconds(hurtDelay);
 
             canBeHurt = true;
-        }
-
-        else
-
-        {
-
-            Debug.Log("Current health is " + health);
-            Debug.Log("You are DEAD.");
-            animator.SetBool("Death", true);
-            ThirdPersonController thirdPersonController = GetComponent<ThirdPersonController>();
-            thirdPersonController.movementEnabled = false;
-
-
         }
     }
 
@@ -116,46 +109,43 @@ public class PlayerHealth : MonoBehaviour
             mana = 0;
             animator.SetBool("NoCast", true);
         }
+
+        gameManager.UpdateMana(mana);
     }
 
 
     private void SpellUsed()
-         {
-            
-                if (mana > 0)
-                {
+    {
 
-                    Debug.Log("Spell Used");
-                    DecrementMana(25);
-                    Debug.Log(mana);
-                }
+        if (mana > 0)
+        {
+            //Debug.Log("Spell Used");
+            DecrementMana(25);
+            //Debug.Log(mana);
         }
-
-
-
-
+    }
 
     public void ResetNoCast()
-        {
-            animator.SetBool("NoCast", false);
-        }
+    {
+        animator.SetBool("NoCast", false);
+    }
 
 
 
     private void OnDestroy()
+    {
+        if (inputTestInstance != null)
         {
-            if (inputTestInstance != null)
-            {
-                inputTestInstance.SpellUsedEvent -= SpellUsed;
-            }
+            inputTestInstance.SpellUsedEvent -= SpellUsed;
         }
+    }
 
 
 
 }
 
 
- 
+
 
 
 

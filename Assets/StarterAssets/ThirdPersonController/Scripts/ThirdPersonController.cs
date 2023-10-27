@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
-using UnityEditorInternal;
+//using UnityEditor.Animations;
+//using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 #if ENABLE_INPUT_SYSTEM
@@ -82,6 +82,8 @@ namespace StarterAssets
         public bool LockCameraPosition = false;
 
         public bool movementEnabled;
+
+        private bool playerAlive;
 
         public PlayerHealth playerHealth;
 
@@ -169,18 +171,30 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
 
             movementEnabled = true;
+
+            playerAlive = true;
         }
 
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
 
+
+            if (playerAlive) 
+            {
+                ApplyGravity();
+            }
+            
             JumpAndGravity();
             GroundedCheck();
-            Move();
-            
-            
+
+            if (movementEnabled)
+            {
+                Move();
+            }                   
         }
+
+
 
         private void LateUpdate()
         {
@@ -189,6 +203,22 @@ namespace StarterAssets
             _animator.SetBool(_animIDDodge, false);
 
 
+        }
+
+
+        public void PlayerAlive()
+        {
+            playerAlive = false;
+        }
+
+        //Controls Player's Gravity 
+        private void ApplyGravity()
+        {
+            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+
+            // move the player
+            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
         }
 
         private void AssignAnimationIDs()
@@ -253,19 +283,10 @@ namespace StarterAssets
             if(playerHealth.mana > 0)
 
             {
-                Debug.Log("Cast");
+                //Debug.Log("Cast");
 
                 _animator.SetBool(_animIDCast, true);
-            }
-
-            
-            
-
-            
-
-
-
-
+            }                             
         }
 
         private void OnDodge()
@@ -282,7 +303,7 @@ namespace StarterAssets
         private void Move()
         {
 
-            if (movementEnabled)
+            //if (movementEnabled)
             {
 
                 // set target speed based on move speed, sprint speed and if sprint is pressed
@@ -337,11 +358,7 @@ namespace StarterAssets
                 }
 
 
-                Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
-                // move the player
-                _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                                 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+               //
 
                 // update animator if using character
                 if (_hasAnimator)

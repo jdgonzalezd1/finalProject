@@ -9,6 +9,6 @@ public class InGameScreen : MonoBehaviour
     public void ExitGame()
     {
         //Debug.Log(SceneManager.GetSceneByBuildIndex(0).name);
-        SceneManager.LoadScene(SceneManager.GetSceneByName("Title Screen").name);
+        SceneManager.LoadScene(0);
     }
 }

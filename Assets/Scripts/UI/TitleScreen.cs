@@ -7,7 +7,7 @@ public class TitleScreen : MonoBehaviour
 {
     public void StartGame()
     {
-        Debug.Log(SceneManager.GetSceneByName("Prototype").name);
-        //SceneManager.LoadScene(SceneManager.GetSceneByName("Prototype01").name);
+        //Debug.Log(SceneManager.GetSceneByName("Prototype").name);
+        SceneManager.LoadScene(1);
     }
 }

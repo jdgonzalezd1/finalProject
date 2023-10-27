@@ -20,9 +20,10 @@ public class PlayerHealth : MonoBehaviour
     private InputTest inputTestInstance;
     private GameManager gameManager;
 
-    void Start()
+    void Awake()
 
     {
+        Cursor.lockState = CursorLockMode.Locked;
         animator = GetComponent<Animator>();
         gameManager = FindAnyObjectByType<GameManager>();
 

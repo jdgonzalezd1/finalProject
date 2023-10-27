@@ -283,19 +283,10 @@ namespace StarterAssets
             if(playerHealth.mana > 0)
 
             {
-                Debug.Log("Cast");
+                //Debug.Log("Cast");
 
                 _animator.SetBool(_animIDCast, true);
-            }
-
-            
-            
-
-            
-
-
-
-
+            }                             
         }
 
         private void OnDodge()

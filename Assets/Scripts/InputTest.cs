@@ -50,17 +50,12 @@ public class InputTest : MonoBehaviour
         private IEnumerator InstantiateCubeWithDelay()
         {
 
-                Debug.Log("Works!");
+                //Debug.Log("Works!");
                 canInstantiate = false;
                 GameObject projectile = objectPooler.GetPooledObject();
             if (projectile != null)
             {
-
-
-
-                spawnPoint.position = positionReference.position;
-
-                
+                spawnPoint.position = positionReference.position;               
 
                 projectile.transform.position = spawnPoint.position;
                 
@@ -70,15 +65,10 @@ public class InputTest : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 rb.velocity = rotationReference.forward * shootForce;
 
-
                 if (SpellUsedEvent != null)
                 {
                     SpellUsedEvent();
                 }
-
-
-
-
         }
             yield return new WaitForSeconds(instantiationDelay);
 

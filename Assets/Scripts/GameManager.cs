@@ -14,12 +14,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        waveEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
+        //waveEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
     }
 
     private void Update()
     {
-        Win(CheckEnemies());
+        //Win(CheckEnemies())
     }
     public void UpdateHealth(int health)
     {
@@ -45,10 +45,11 @@ public class GameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
     }
-
+    /*
     private int CheckEnemies()
     {
         waveEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
         return waveEnemies;
     }
+    */
 }

@@ -18,20 +18,20 @@ public class PlayerHealth : MonoBehaviour
     public float hurtDelay = 2f;
 
     private InputTest inputTestInstance;
-    private GameManager gameManager;
+    private HUD hud;
 
     void Awake()
 
     {
         Cursor.lockState = CursorLockMode.Locked;
         animator = GetComponent<Animator>();
-        gameManager = FindAnyObjectByType<GameManager>();
+        hud = FindAnyObjectByType<HUD>();
 
         health = 100;
         mana = 100;
         stamina = 100;
-        gameManager.UpdateHealth(health);
-        gameManager.UpdateMana(mana);
+        hud.UpdateHealth(health);
+        hud.UpdateMana(mana);
 
         inputTestInstance = GetComponent<InputTest>();
 
@@ -89,10 +89,10 @@ public class PlayerHealth : MonoBehaviour
                 animator.SetBool("Death", true);
                 ThirdPersonController thirdPersonController = GetComponent<ThirdPersonController>();
                 thirdPersonController.movementEnabled = false;
-                gameManager.GameOver();
+                hud.GameOver();
 
             }
-            gameManager.UpdateHealth(health);
+            hud.UpdateHealth(health);
             yield return new WaitForSeconds(hurtDelay);
 
             canBeHurt = true;
@@ -110,7 +110,7 @@ public class PlayerHealth : MonoBehaviour
             animator.SetBool("NoCast", true);
         }
 
-        gameManager.UpdateMana(mana);
+        hud.UpdateMana(mana);
     }
 
 

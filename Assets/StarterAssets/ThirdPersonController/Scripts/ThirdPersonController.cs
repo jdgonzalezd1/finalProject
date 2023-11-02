@@ -24,6 +24,14 @@ namespace StarterAssets
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
+        public float DodgeSpeed = 10.0f; 
+        private bool isDodging = false;
+        public bool canDodge;
+
+        public delegate void DodgeUsedDelegate();
+        public event DodgeUsedDelegate DodgeUsedEvent;
+
+
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
 
@@ -173,6 +181,8 @@ namespace StarterAssets
             movementEnabled = true;
 
             playerAlive = true;
+
+            canDodge = true;
         }
 
         private void Update()
@@ -291,17 +301,46 @@ namespace StarterAssets
 
         private void OnDodge()
         {
-            //Debug.Log(_animIDCast);
-            //_animator.SetBool(_animIDCast, true);
-            //if (_hasAnimator)
-            //{
-            Debug.Log("Dodge");
-            _animator.SetBool(_animIDDodge, true);
-            //}
+            if (canDodge )
+            {
+
+                Debug.Log("Dodge");
+                _animator.SetBool(_animIDDodge, true);
+
+                isDodging = true;
+                MoveSpeed = DodgeSpeed;
+                canDodge = false;
+
+                if (DodgeUsedEvent != null)
+                {
+                    DodgeUsedEvent();
+                }
+
+            }
+            
+
+        }
+
+
+        public void EndDodge()
+        {
+            isDodging = false;
+            MoveSpeed = 2.0f; 
         }
 
         private void Move()
         {
+
+            Vector3 targetDirection;
+            if (isDodging)
+            {
+                targetDirection = transform.forward;
+            }
+            else
+            {
+                targetDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            }
+
 
             //if (movementEnabled)
             {

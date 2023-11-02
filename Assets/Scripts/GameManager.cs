@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI manaText;
+    [SerializeField] private TextMeshProUGUI staminaText;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject winUI;
     [SerializeField] private int waveEnemies;
@@ -30,6 +31,12 @@ public class GameManager : MonoBehaviour
     {
         manaText.text = "Mana: " + mana;
     }
+
+    public void UpdateStamina(float stamina)
+    {
+        staminaText.text = "Stamina: " + stamina;
+    }
+
 
     public void GameOver()
     {

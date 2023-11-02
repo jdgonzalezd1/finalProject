@@ -46,11 +46,16 @@ public class InputTest : MonoBehaviour
     //}
 
 
-
+        
+        private void OnChange()
+        {
+        Debug.Log("changing Spell");
+        }
+        
         private IEnumerator InstantiateCubeWithDelay()
         {
 
-                //Debug.Log("Works!");
+                
                 canInstantiate = false;
                 GameObject projectile = objectPooler.GetPooledObject();
             if (projectile != null)

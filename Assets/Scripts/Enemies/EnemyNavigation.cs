@@ -6,46 +6,47 @@ using UnityEngine.AI;
 public class EnemyNavigation : MonoBehaviour
 {
     [Tooltip("Field that indicates if enemy is currently attacking")]
-    [SerializeField] private bool isAttacking;
+    [SerializeField] private bool isAttacking;    
 
     [SerializeField] private Transform[] locations;
     [SerializeField] private Transform lockedPosition;
     [SerializeField] private Transform playerPosition;
     [SerializeField] private NavMeshAgent enemy;
-    
+
     private void Awake()
     {
         enemy = GetComponent<NavMeshAgent>();
+        playerPosition = GameObject.FindWithTag("Player").transform;
         locations = GetLocations();
-        AttackPosition();     
+        AttackPosition();
     }
 
     private void Update()
     {
         locations = GetLocations();
         enemy.destination = lockedPosition.position;
-        InitiateAttack(playerPosition.position);        
+        InitiateAttack(playerPosition.position);
     }
 
     private Transform[] GetLocations()
     {
         List<Transform> trackPositions = new();
-        foreach(Transform child in playerPosition.GetChild(2))
-        {                        
+        foreach (Transform child in playerPosition.GetChild(2))
+        {
             trackPositions.Add(child);
         }
-        return trackPositions.ToArray();        
+        return trackPositions.ToArray();
     }
 
     private void AttackPosition()
     {
-        lockedPosition = locations[Random.Range(0, locations.Length)];        
+        lockedPosition = locations[Random.Range(0, locations.Length)];
     }
 
     private void InitiateAttack(Vector3 playerPosition)
-    {        
+    {
         if (Vector3.Distance(transform.position, lockedPosition.position) < 1f)
-        {            
+        {
             enemy.isStopped = true;
             StartCoroutine(Attack(playerPosition));
         }

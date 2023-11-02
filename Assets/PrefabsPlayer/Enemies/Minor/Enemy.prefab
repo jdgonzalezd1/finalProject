@@ -150,6 +150,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   lockedPosition: {fileID: 0}
-  playerPosition: {fileID: 8549199038561347895, guid: 396235a11ce0f2d42bb80414fc22eff5,
-    type: 3}
+  playerPosition: {fileID: 0}
   enemy: {fileID: 0}

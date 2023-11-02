@@ -4,32 +4,38 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private int wave;
-    [SerializeField] private int enemies;
-    
+    [SerializeField] private int currentWave;
+    [SerializeField] private int currentEnemies;
+
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Transform[] spawnLocations;
-    
+
+
     private void Update()
-    {
-        wave = gameManager.WaveCount;
-        enemies = gameManager.WaveEnemies;
-        if (enemies == 0 && wave < 3)
+    {        
+        if (gameManager.WaveEnemies == 0 && gameManager.WaveCount < 3)
         {
-            SpawnWave(wave);
-        }    
+            SpawnWave();
+        }
     }
 
-    private void SpawnWave(int wave)
+    private void SpawnWave()
     {
+        if (gameManager.WaveCount <= 0)
+        {
+            gameManager.WaveCount = 1;
+        }else
+        {
+            gameManager.WaveCount++;
+        }
+        
         foreach (var item in spawnLocations)
         {
-            for(int i = 0; i < wave; i++)
+            for (int i = 0; i < gameManager.WaveCount; i++)
             {
                 Instantiate(enemy, item.position, enemy.transform.rotation);
             }
-        }
-        this.wave++;
+        }        
     }
 }

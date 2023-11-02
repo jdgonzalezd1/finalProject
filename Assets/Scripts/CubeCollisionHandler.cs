@@ -15,7 +15,7 @@ public class CubeCollisionHandler : MonoBehaviour
         // You can add any additional logic here, such as checking for specific tags or layers
         gameObject.SetActive(false);
 
-        if (collision.gameObject.CompareTag("Target"))
+        if (collision.gameObject.CompareTag("Target") || collision.gameObject.CompareTag("Enemy"))
 
         {
             collision.gameObject.SetActive(false);

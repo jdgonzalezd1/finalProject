@@ -1500,8 +1500,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c5e6de6a4a4f5547bf7d0681f43641e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveEnemies: 0
   waveCount: 0
+  waveEnemies: 0
+  hud: {fileID: 0}
 --- !u!4 &777857523
 Transform:
   m_ObjectHideFlags: 0
@@ -1654,6 +1655,9 @@ MonoBehaviour:
   - prefab: {fileID: 5078715049791705090, guid: e8386df5f15d76049b6746c53fd39241,
       type: 3}
     amount: 1
+  - prefab: {fileID: 2126444339906849005, guid: 74c3f8cdd9ddaec4780c3e76a47bca41,
+      type: 3}
+    amount: 4
   objectsParent: {fileID: 1012507732}
 --- !u!4 &843322834
 Transform:
@@ -4712,8 +4716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa604a5903a96f04b98285a98d20459b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wave: 0
-  enemies: 0
+  currentWave: 0
+  currentEnemies: 0
   enemy: {fileID: 2126444339906849005, guid: 74c3f8cdd9ddaec4780c3e76a47bca41, type: 3}
   gameManager: {fileID: 777857522}
   spawnLocations:

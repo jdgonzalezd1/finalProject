@@ -27,12 +27,9 @@ public class HUD : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void Win(int waveEnemies)
+    public void Win()
     {
-        if (waveEnemies == 0)
-        {
-            winUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-        }
+        winUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 }

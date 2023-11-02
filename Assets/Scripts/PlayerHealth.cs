@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour
         hud = FindAnyObjectByType<HUD>();
 
         health = 100;
-        mana = 100;
+        mana = 1000;
         stamina = 100;
         hud.UpdateHealth(health);
         hud.UpdateMana(mana);

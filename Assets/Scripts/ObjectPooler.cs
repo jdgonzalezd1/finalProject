@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
+
+    public GameObject selectedObject;
     [System.Serializable]
     public class PooledObject
     {
@@ -38,7 +40,7 @@ public class ObjectPooler : MonoBehaviour
     {
         foreach (GameObject obj in pool)
         {
-            if (!obj.activeInHierarchy)
+            if (obj == selectedObject && !obj.activeInHierarchy)
             {
                 return obj;
             }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private int currentWave;
-    [SerializeField] private int currentEnemies;
 
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameManager gameManager;

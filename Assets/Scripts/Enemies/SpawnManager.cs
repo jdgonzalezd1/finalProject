@@ -28,13 +28,13 @@ public class SpawnManager : MonoBehaviour
         {
             gameManager.WaveCount++;
         }
-
+        
         foreach (var item in spawnLocations)
         {
             for (int i = 0; i < gameManager.WaveCount; i++)
             {
                 Instantiate(enemy, item.position, enemy.transform.rotation);
             }
-        }
+        }        
     }
 }

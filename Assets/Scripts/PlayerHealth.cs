@@ -87,6 +87,8 @@ public class PlayerHealth : MonoBehaviour
 
             }
             hud.UpdateHealth(health);
+            //For testing purpose
+            hud.UpdateHealthBar(health);
             yield return new WaitForSeconds(hurtDelay);
 
             canBeHurt = true;
@@ -134,7 +136,18 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void DecrementManaTest(int amount)
+    {
+        mana -= amount;
 
+        if (mana <= 0)
+        {
+            mana = 0;
+            animator.SetBool("NoCast", true);
+        }
+
+        hud.UpdateManaBar(mana);
+    }
 
 }
 

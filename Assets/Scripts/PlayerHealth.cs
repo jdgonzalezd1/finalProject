@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
 
         health = 100;
         mana = 1000;
-        stamina = 100;
+        //stamina = 100;
         hud.UpdateHealth(health);
         hud.UpdateMana(mana);
 

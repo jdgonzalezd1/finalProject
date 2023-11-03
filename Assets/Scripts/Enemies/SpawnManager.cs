@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
 
 
     private void Update()
-    {        
+    {
         if (gameManager.WaveEnemies == 0 && gameManager.WaveCount < 3)
         {
             SpawnWave();
@@ -23,17 +23,18 @@ public class SpawnManager : MonoBehaviour
         if (gameManager.WaveCount <= 0)
         {
             gameManager.WaveCount = 1;
-        }else
+        }
+        else
         {
             gameManager.WaveCount++;
         }
-        
+
         foreach (var item in spawnLocations)
         {
             for (int i = 0; i < gameManager.WaveCount; i++)
             {
                 Instantiate(enemy, item.position, enemy.transform.rotation);
             }
-        }        
+        }
     }
 }

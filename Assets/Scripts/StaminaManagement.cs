@@ -22,7 +22,6 @@ public class StaminaManagement : MonoBehaviour
 
         gameManager = FindAnyObjectByType<GameManager>();
 
-        gameManager.UpdateStamina(stamina);
 
         thirdPersonController = GetComponent<ThirdPersonController>();
 
@@ -36,7 +35,6 @@ public class StaminaManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameManager.UpdateStamina(stamina);
 
         
     }
@@ -71,7 +69,6 @@ public class StaminaManagement : MonoBehaviour
             {
                 stamina = 100;
             }
-            gameManager.UpdateStamina(stamina); // Actualiza la UI con el valor recuperado de la stamina.
             
         }
         isRecovering = false;
@@ -85,7 +82,6 @@ public class StaminaManagement : MonoBehaviour
         {
             stamina = 0;
         }
-        gameManager.UpdateStamina(stamina); // Actualiza la UI con el valor actual de la stamina.
         if (stamina < 35)
         {
             thirdPersonController.canDodge = false;

@@ -11,6 +11,9 @@ public class HUD : MonoBehaviour
     [SerializeField] private Slider easeBar;
     [SerializeField] private float lerpSpeed = 0.05f;
 
+    [SerializeField] private Slider manaBar;
+    [SerializeField] private Slider staminaBar;
+
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI manaText;
     [SerializeField] private GameObject gameOverUI;
@@ -22,14 +25,20 @@ public class HUD : MonoBehaviour
     private void Start()
     {
         playerResources = FindAnyObjectByType<PlayerHealth>();
-        UpdateHealthBar(playerResources.health);        
-    }
+        UpdateHealthBar(playerResources.health);
+        UpdateManaBar(playerResources.mana);
+    }    
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(playerResources.canBeHurtDelay(10));
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            playerResources.DecrementManaTest(100);
         }
         EaseBar();
     }
@@ -62,6 +71,15 @@ public class HUD : MonoBehaviour
     public void UpdateMana(int mana)
     {
         manaText.text = "Mana: " + mana;
+    }
+
+    public void UpdateManaBar(int mana)
+    {
+        if (manaBar.maxValue < mana)
+        {
+            manaBar.maxValue = mana;
+        }
+        manaBar.value = mana;
     }
 
     public void GameOver()

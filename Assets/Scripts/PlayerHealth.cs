@@ -136,7 +136,18 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void DecrementManaTest(int amount)
+    {
+        mana -= amount;
 
+        if (mana <= 0)
+        {
+            mana = 0;
+            animator.SetBool("NoCast", true);
+        }
+
+        hud.UpdateManaBar(mana);
+    }
 
 }
 

@@ -9,8 +9,9 @@ public class PlayerHealth : MonoBehaviour
 {
     private Animator animator;
 
-    public int health;
+    public float health;
     public int mana;
+    public bool isAlive = true;
     
 
     private bool canBeHurt = true;
@@ -28,10 +29,10 @@ public class PlayerHealth : MonoBehaviour
         hud = FindAnyObjectByType<HUD>();
 
         health = 100;
-        mana = 1000;
+        mana = 700;
         //stamina = 100;
-        hud.UpdateHealth(health);
-        hud.UpdateMana(mana);
+        //hud.UpdateHealth(health);
+        //hud.UpdateMana(mana);
 
         inputTestInstance = GetComponent<InputTest>();
 
@@ -45,53 +46,36 @@ public class PlayerHealth : MonoBehaviour
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        int damage;
-        if (hit.gameObject.CompareTag("Target") && canBeHurt)
-        {
-            damage = 25;
-            StartCoroutine(canBeHurtDelay(damage));
+    {        
+        if (hit.gameObject.CompareTag("DeathZone") && canBeHurt)
+        {                               
+            StartCoroutine(canBeHurtDelay(health));
         }
-        else if (hit.gameObject.CompareTag("DeathZone") && canBeHurt)
-        {            
-            damage = health;
-            StartCoroutine(canBeHurtDelay(damage));
-        }
-
-
-
     }
 
 
-    public IEnumerator canBeHurtDelay(int damage)
+    public IEnumerator canBeHurtDelay(float damage)
     {
         if (health > 0)
-        {
-            
-
+        {            
             canBeHurt = false;
-
             health -= damage;
 
-            
-
             if (health <= 0)
-
             {
-
-                
                 animator.SetBool("Death", true);
+                isAlive = false;
                 ThirdPersonController thirdPersonController = GetComponent<ThirdPersonController>();
                 thirdPersonController.movementEnabled = false;
                 hud.GameOver();
-
             }
-            hud.UpdateHealth(health);
-            //For testing purpose
+
             hud.UpdateHealthBar(health);
+            
             yield return new WaitForSeconds(hurtDelay);
 
             canBeHurt = true;
+
         }
     }
 
@@ -106,7 +90,7 @@ public class PlayerHealth : MonoBehaviour
             animator.SetBool("NoCast", true);
         }
 
-        hud.UpdateMana(mana);
+        hud.UpdateManaBar(mana);
     }
 
 
@@ -126,6 +110,11 @@ public class PlayerHealth : MonoBehaviour
         animator.SetBool("NoCast", false);
     }
 
+    public void Attacked(float damage)
+    {
+        StartCoroutine(canBeHurtDelay(damage));
+    }
+
 
 
     private void OnDestroy()
@@ -134,19 +123,6 @@ public class PlayerHealth : MonoBehaviour
         {
             inputTestInstance.SpellUsedEvent -= SpellUsed;
         }
-    }
-
-    public void DecrementManaTest(int amount)
-    {
-        mana -= amount;
-
-        if (mana <= 0)
-        {
-            mana = 0;
-            animator.SetBool("NoCast", true);
-        }
-
-        hud.UpdateManaBar(mana);
     }
 
 }

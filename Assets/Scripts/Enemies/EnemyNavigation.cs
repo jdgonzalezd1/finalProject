@@ -6,16 +6,24 @@ using UnityEngine.AI;
 public class EnemyNavigation : MonoBehaviour
 {
     [Tooltip("Field that indicates if enemy is currently attacking")]
-    [SerializeField] private bool isAttacking;    
+    [SerializeField] private bool isAttacking;
 
     [SerializeField] private Transform[] locations;
     [SerializeField] private Transform lockedPosition;
     [SerializeField] private Transform playerPosition;
+    [SerializeField] private PlayerHealth player;
     [SerializeField] private NavMeshAgent enemy;
+
+    [SerializeField] private Collider enemyCollider;
+
+    [SerializeField] private Animator animator;
 
     private void Start()
     {
         enemy = GetComponent<NavMeshAgent>();
+        enemyCollider = GetComponent<Collider>();
+        animator = GetComponent<Animator>();
+        player = FindAnyObjectByType<PlayerHealth>();
         playerPosition = GameObject.FindWithTag("Player").transform;
         locations = GetLocations();
         AttackPosition();
@@ -24,8 +32,22 @@ public class EnemyNavigation : MonoBehaviour
     private void Update()
     {
         locations = GetLocations();
-        enemy.destination = lockedPosition.position;
+        Moving();
         InitiateAttack(playerPosition.position);
+    }
+
+    private void Moving()
+    {
+        if (!player.isAlive)
+        {
+            enemy.isStopped = true;
+            animator.SetBool("isMoving", false);
+        }
+        else
+        {
+            enemy.destination = lockedPosition.position;
+            animator.SetBool("isMoving", true);
+        }
     }
 
     private Transform[] GetLocations()
@@ -45,22 +67,33 @@ public class EnemyNavigation : MonoBehaviour
 
     private void InitiateAttack(Vector3 playerPosition)
     {
-        if (Vector3.Distance(transform.position, lockedPosition.position) < 1f)
+        if (Vector3.Distance(transform.position, lockedPosition.position) < 0.5f)
         {
             enemy.isStopped = true;
+            //transform.LookAt(playerPosition);
+            animator.SetBool("isMoving", false);
             StartCoroutine(Attack(playerPosition));
         }
     }
 
     private IEnumerator Attack(Vector3 playerPosition)
     {
-        yield return new WaitForSeconds(1);
         float step = enemy.speed * Time.deltaTime;
         isAttacking = true;
+        animator.SetBool("isAttacking", isAttacking);
+        enemyCollider.isTrigger = true;
+        yield return new WaitForSeconds(1);
         transform.position = Vector3.MoveTowards(transform.position, playerPosition, step);
         yield return new WaitForSeconds(1);
-        enemy.isStopped = false;
         isAttacking = false;
+        animator.SetBool("isAttacking", isAttacking);
+        enemyCollider.isTrigger = false;
+        enemy.isStopped = false;
+    }
+
+    public bool IsAttacking
+    {
+        get { return isAttacking; }
     }
 
 }

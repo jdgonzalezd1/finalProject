@@ -14,33 +14,27 @@ public class HUD : MonoBehaviour
     [SerializeField] private Slider manaBar;
     [SerializeField] private Slider staminaBar;
 
-    [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private TextMeshProUGUI manaText;
+    [SerializeField] private TextMeshProUGUI enemiesCount;
+    [SerializeField] private TextMeshProUGUI waveCount;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject winUI;
-    [SerializeField] private GameObject gameManager;
+    [SerializeField] private GameManager gameManager;
 
     [SerializeField] private PlayerHealth playerResources;
 
     private void Start()
     {
         playerResources = FindAnyObjectByType<PlayerHealth>();
+        gameManager = FindAnyObjectByType<GameManager>();
         UpdateHealthBar(playerResources.health);
         UpdateManaBar(playerResources.mana);
     }    
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(playerResources.canBeHurtDelay(10));
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            playerResources.DecrementManaTest(100);
-        }
         EaseBar();
+        UpdateEnemyCount();
+        UpdateWaveCount();
     }
 
     private void EaseBar()
@@ -50,11 +44,11 @@ public class HUD : MonoBehaviour
             easeBar.value = Mathf.Lerp(easeBar.value, healthBar.value, lerpSpeed);
         }
     }
-
+    /*
     public void UpdateHealth(int health)
     {
         healthText.text = "Health: " + health;
-    }
+    }*/
 
     public void UpdateHealthBar(float health)
     {
@@ -67,11 +61,11 @@ public class HUD : MonoBehaviour
 
         healthBar.value = health;
     }
-
+    /*
     public void UpdateMana(int mana)
     {
         manaText.text = "Mana: " + mana;
-    }
+    }*/
 
     public void UpdateManaBar(int mana)
     {
@@ -80,6 +74,16 @@ public class HUD : MonoBehaviour
             manaBar.maxValue = mana;
         }
         manaBar.value = mana;
+    }
+
+    public void UpdateEnemyCount()
+    {
+        enemiesCount.text = gameManager.WaveEnemies.ToString();
+    }
+
+    public void UpdateWaveCount()
+    {
+        waveCount.text = "Wave\n" + gameManager.WaveCount.ToString() + "/" + gameManager.FinalWave.ToString();
     }
 
     public void GameOver()
@@ -91,6 +95,7 @@ public class HUD : MonoBehaviour
     public void Win()
     {
         winUI.SetActive(true);
+        waveCount.text = null;
         Cursor.lockState = CursorLockMode.None;
     }
 }

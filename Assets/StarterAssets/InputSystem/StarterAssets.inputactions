@@ -43,9 +43,9 @@
                 },
                 {
                     "name": "Dodge",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "b35ad78c-a787-405c-b9e6-29c288fc77d5",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -54,6 +54,15 @@
                     "name": "Cast",
                     "type": "Button",
                     "id": "5f680949-2920-45af-94db-1b89ff0403e7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Change",
+                    "type": "Button",
+                    "id": "c216f547-7135-4033-b978-3fce031f72f6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -212,6 +221,28 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2c3a150-4c8e-4a67-8d5e-65308cc232ae",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Change",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f6bb1d1-3a00-4f25-b3c4-d59eb177214d",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Change",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -14,6 +14,7 @@ namespace StarterAssets
 		public bool sprint;
         public bool cast;
 		public bool dodge;
+		public bool change;
 
         [Header("Movement Settings")]
 		public bool analogMovement;
@@ -57,6 +58,11 @@ namespace StarterAssets
             DodgeInput(value.isPressed);
         }
 
+		public void OnChange(InputValue value)
+		{
+            ChangeInput(value.isPressed);
+		}
+
 
         public void MoveInput(Vector2 newMoveDirection)
 		{
@@ -87,6 +93,11 @@ namespace StarterAssets
         {
             dodge = newDodgeState;
         }
+
+		public void ChangeInput(bool newChangeState)
+		{
+			change = newChangeState;
+		}
 
 
         private void OnApplicationFocus(bool hasFocus)

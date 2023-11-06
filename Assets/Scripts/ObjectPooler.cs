@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
+
     [System.Serializable]
     public class PooledObject
     {

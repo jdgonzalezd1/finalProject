@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,50 +6,55 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-    [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private TextMeshProUGUI manaText;
-    [SerializeField] private GameObject gameOverUI;
-    [SerializeField] private GameObject winUI;
+    [SerializeField] private int waveCount;
     [SerializeField] private int waveEnemies;
+    [SerializeField] private int finalWave;
 
-    private void Awake()
-    {
-        waveEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
+    [SerializeField] private HUD hud;
+
+    private void Start()
+    {        
+        hud = FindAnyObjectByType<HUD>();
+        finalWave = 3;
     }
+
+
 
     private void Update()
     {
-        Win(CheckEnemies());
-    }
-    public void UpdateHealth(int health)
-    {
-        healthText.text = "Health: " + health;
+        waveEnemies = CheckEnemies();
+        CheckWinCondition();
     }
 
-    public void UpdateMana(int mana)
+    private void CheckWinCondition()
     {
-        manaText.text = "Mana: " + mana;
-    }
-
-    public void GameOver()
-    {
-        gameOverUI.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-    }
-
-    public void Win(int enemies)
-    {
-        if (waveEnemies == 0)
+        if (waveCount >= finalWave && waveEnemies == 0)
         {
-            winUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
+            hud.Win();
         }
     }
 
     private int CheckEnemies()
     {
-        waveEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
-        return waveEnemies;
+        int currentEnemies = FindObjectsByType<EnemyNavigation>(FindObjectsSortMode.None).Length;
+        return currentEnemies;
+    }
+    
+
+    public int WaveEnemies
+    {
+        get { return waveEnemies; }
+        set {  waveEnemies = value; }
+    }
+
+    public int WaveCount
+    {
+        get { return waveCount; }
+        set { waveCount = value; }
+    }
+
+    public int FinalWave
+    {
+        get { return finalWave; }
     }
 }

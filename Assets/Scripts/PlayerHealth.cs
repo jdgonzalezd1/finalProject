@@ -9,29 +9,30 @@ public class PlayerHealth : MonoBehaviour
 {
     private Animator animator;
 
-    public int health;
+    public float health;
     public int mana;
-    public int stamina;
+    public bool isAlive = true;
+    
 
     private bool canBeHurt = true;
 
     public float hurtDelay = 2f;
 
     private InputTest inputTestInstance;
-    private GameManager gameManager;
+    private HUD hud;
 
     void Awake()
 
     {
         Cursor.lockState = CursorLockMode.Locked;
         animator = GetComponent<Animator>();
-        gameManager = FindAnyObjectByType<GameManager>();
+        hud = FindAnyObjectByType<HUD>();
 
         health = 100;
-        mana = 100;
-        stamina = 100;
-        gameManager.UpdateHealth(health);
-        gameManager.UpdateMana(mana);
+        mana = 700;
+        //stamina = 100;
+        //hud.UpdateHealth(health);
+        //hud.UpdateMana(mana);
 
         inputTestInstance = GetComponent<InputTest>();
 
@@ -41,61 +42,40 @@ public class PlayerHealth : MonoBehaviour
         }
 
 
-        //Displays a message on the console about the initial value of health, mana and stamina:
-        /*
-        Debug.Log("<b><size=14>Current health is: <color=green>" + health +
-            "</color> Current mana is: <color=blue>" + mana + "</color> Current stamina is: <color=orange>" +
-            stamina + "</color></size></b>");
-        */
+        
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        int damage;
-        if (hit.gameObject.CompareTag("Target") && canBeHurt)
-        {
-            damage = 25;
-            StartCoroutine(canBeHurtDelay(damage));
+    {        
+        if (hit.gameObject.CompareTag("DeathZone") && canBeHurt)
+        {                               
+            StartCoroutine(canBeHurtDelay(health));
         }
-        else if (hit.gameObject.CompareTag("DeathZone") && canBeHurt)
-        {            
-            damage = health;
-            StartCoroutine(canBeHurtDelay(damage));
-        }
-
-
-
     }
 
 
-    public IEnumerator canBeHurtDelay(int damage)
+    public IEnumerator canBeHurtDelay(float damage)
     {
         if (health > 0)
-        {
-            //Debug.Log("<b><size=14>Damage Taken: <color=red>25</color></size></b>");
-
+        {            
             canBeHurt = false;
-
             health -= damage;
 
-            //Debug.Log("<b><size=14>Current health is <color=green>" + health + "</color></size></b>");
-
             if (health <= 0)
-
             {
-
-                //Debug.Log("<b><size=14>Current health is <color=green>" + health + "</color></size></b>");
-                //Debug.Log("<b><size=14><color=maroon>You are DEAD.</color></size></b>");
                 animator.SetBool("Death", true);
+                isAlive = false;
                 ThirdPersonController thirdPersonController = GetComponent<ThirdPersonController>();
                 thirdPersonController.movementEnabled = false;
-                gameManager.GameOver();
-
+                hud.GameOver();
             }
-            gameManager.UpdateHealth(health);
+
+            hud.UpdateHealthBar(health);
+            
             yield return new WaitForSeconds(hurtDelay);
 
             canBeHurt = true;
+
         }
     }
 
@@ -110,7 +90,7 @@ public class PlayerHealth : MonoBehaviour
             animator.SetBool("NoCast", true);
         }
 
-        gameManager.UpdateMana(mana);
+        hud.UpdateManaBar(mana);
     }
 
 
@@ -119,15 +99,20 @@ public class PlayerHealth : MonoBehaviour
 
         if (mana > 0)
         {
-            //Debug.Log("Spell Used");
+            
             DecrementMana(25);
-            //Debug.Log(mana);
+            
         }
     }
 
     public void ResetNoCast()
     {
         animator.SetBool("NoCast", false);
+    }
+
+    public void Attacked(float damage)
+    {
+        StartCoroutine(canBeHurtDelay(damage));
     }
 
 
@@ -139,8 +124,6 @@ public class PlayerHealth : MonoBehaviour
             inputTestInstance.SpellUsedEvent -= SpellUsed;
         }
     }
-
-
 
 }
 

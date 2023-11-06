@@ -24,7 +24,7 @@ namespace StarterAssets
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
-        public float DodgeSpeed = 10.0f; 
+        public float DodgeSpeed = 4.0f; 
         private bool isDodging = false;
         public bool canDodge;
 
@@ -309,7 +309,7 @@ namespace StarterAssets
 
                 isDodging = true;
                 MoveSpeed = DodgeSpeed;
-                canDodge = false;
+                canDodge = true;
 
                 if (DodgeUsedEvent != null)
                 {

@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
 
 
     private void Update()
-    {        
+    {
         if (gameManager.WaveEnemies == 0 && gameManager.WaveCount < 3)
         {
             SpawnWave();
@@ -23,7 +23,8 @@ public class SpawnManager : MonoBehaviour
         if (gameManager.WaveCount <= 0)
         {
             gameManager.WaveCount = 1;
-        }else
+        }
+        else
         {
             gameManager.WaveCount++;
         }

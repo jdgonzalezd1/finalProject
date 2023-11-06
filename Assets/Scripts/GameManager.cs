@@ -8,13 +8,17 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private int waveCount;
     [SerializeField] private int waveEnemies;
+    [SerializeField] private int finalWave;
 
     [SerializeField] private HUD hud;
 
-    private void Awake()
+    private void Start()
     {        
         hud = FindAnyObjectByType<HUD>();
+        finalWave = 3;
     }
+
+
 
     private void Update()
     {
@@ -24,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckWinCondition()
     {
-        if (waveCount >= 3 && waveEnemies == 0)
+        if (waveCount >= finalWave && waveEnemies == 0)
         {
             hud.Win();
         }
@@ -47,5 +51,10 @@ public class GameManager : MonoBehaviour
     {
         get { return waveCount; }
         set { waveCount = value; }
+    }
+
+    public int FinalWave
+    {
+        get { return finalWave; }
     }
 }

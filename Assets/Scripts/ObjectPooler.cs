@@ -4,7 +4,6 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour
 {
 
-    public GameObject selectedObject;
     [System.Serializable]
     public class PooledObject
     {
@@ -40,7 +39,7 @@ public class ObjectPooler : MonoBehaviour
     {
         foreach (GameObject obj in pool)
         {
-            if (obj == selectedObject && !obj.activeInHierarchy)
+            if (!obj.activeInHierarchy)
             {
                 return obj;
             }

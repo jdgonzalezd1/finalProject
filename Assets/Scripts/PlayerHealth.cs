@@ -30,9 +30,7 @@ public class PlayerHealth : MonoBehaviour
 
         health = 100;
         mana = 700;
-        //stamina = 100;
-        //hud.UpdateHealth(health);
-        //hud.UpdateMana(mana);
+        
 
         inputTestInstance = GetComponent<InputTest>();
 

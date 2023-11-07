@@ -11,7 +11,7 @@ public class StaminaManagement : MonoBehaviour
 
     public float staminaRecoveryRate = 5.0f;
 
-    private GameManager gameManager;
+    private HUD hud;
 
     private ThirdPersonController thirdPersonController;
 
@@ -20,9 +20,10 @@ public class StaminaManagement : MonoBehaviour
     {
         stamina = 100;
 
-        gameManager = FindAnyObjectByType<GameManager>();
 
-        //gameManager.UpdateStamina(stamina);
+        hud = FindAnyObjectByType<HUD>();
+
+        
 
         thirdPersonController = GetComponent<ThirdPersonController>();
 
@@ -33,22 +34,15 @@ public class StaminaManagement : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //gameManager.UpdateStamina(stamina);
-
-        
-    }
 
     private void DodgeUsed()
     {
         if (stamina > 0)
         {
-            DecrementStamina(35); // Decrementa la stamina cuando se esquiva.
+            DecrementStamina(35);             
             if (!isRecovering)
             {
-                StartCoroutine(StartStaminaRecovery()); // Inicia la recuperaci�n de la stamina.
+                StartCoroutine(StartStaminaRecovery()); 
             }
         }
     }
@@ -71,8 +65,7 @@ public class StaminaManagement : MonoBehaviour
             {
                 stamina = 100;
             }
-            //gameManager.UpdateStamina(stamina); // Actualiza la UI con el valor recuperado de la stamina.
-            
+            hud.UpdateStaminaBar(stamina);
         }
         isRecovering = false;
     }
@@ -85,11 +78,12 @@ public class StaminaManagement : MonoBehaviour
         {
             stamina = 0;
         }
-        //gameManager.UpdateStamina(stamina); // Actualiza la UI con el valor actual de la stamina.
+      
         if (stamina < 35)
         {
             thirdPersonController.canDodge = false;
         }
+        hud.UpdateStaminaBar(stamina);
     }
 
 

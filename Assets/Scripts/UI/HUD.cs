@@ -21,13 +21,16 @@ public class HUD : MonoBehaviour
     [SerializeField] private GameManager gameManager;
 
     [SerializeField] private PlayerHealth playerResources;
+    [SerializeField] private StaminaManagement playerStamina;
 
     private void Start()
     {
         playerResources = FindAnyObjectByType<PlayerHealth>();
+        playerStamina = FindAnyObjectByType<StaminaManagement>();
         gameManager = FindAnyObjectByType<GameManager>();
         UpdateHealthBar(playerResources.health);
         UpdateManaBar(playerResources.mana);
+        UpdateStaminaBar(playerStamina.stamina);
     }    
 
     private void Update()
@@ -67,13 +70,22 @@ public class HUD : MonoBehaviour
         manaText.text = "Mana: " + mana;
     }*/
 
-    public void UpdateManaBar(int mana)
+    public void UpdateManaBar(float mana)
     {
         if (manaBar.maxValue < mana)
         {
             manaBar.maxValue = mana;
         }
         manaBar.value = mana;
+    }
+
+    public void UpdateStaminaBar(float stamina)
+    {
+        if (staminaBar.maxValue < stamina)
+        {
+            staminaBar.maxValue = stamina;
+        }
+        staminaBar.value = stamina;
     }
 
     public void UpdateEnemyCount()

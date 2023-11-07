@@ -34,19 +34,12 @@ public class StaminaManagement : MonoBehaviour
 
     }
 
-  
-    void Update()
-    {
-       
-
-        
-    }
 
     private void DodgeUsed()
     {
         if (stamina > 0)
         {
-            DecrementStamina(35); 
+            DecrementStamina(35);             
             if (!isRecovering)
             {
                 StartCoroutine(StartStaminaRecovery()); 
@@ -72,8 +65,7 @@ public class StaminaManagement : MonoBehaviour
             {
                 stamina = 100;
             }
-            
-            
+            hud.UpdateStaminaBar(stamina);
         }
         isRecovering = false;
     }
@@ -91,6 +83,7 @@ public class StaminaManagement : MonoBehaviour
         {
             thirdPersonController.canDodge = false;
         }
+        hud.UpdateStaminaBar(stamina);
     }
 
 

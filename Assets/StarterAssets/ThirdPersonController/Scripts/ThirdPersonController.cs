@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Unity.VisualScripting;
 //using UnityEditor.Animations;
 //using UnityEditorInternal;
@@ -24,9 +25,13 @@ namespace StarterAssets
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
-        public float DodgeSpeed = 4.0f; 
-        private bool isDodging = false;
-        public bool canDodge;
+        public float DodgeSpeed = 4.0f; //
+        private bool isDodging = false;//
+        public bool canDodge; // 
+
+        private float dashSpeed = 20f; 
+        private float dashDuration = 0.2f; 
+        private bool isDashing;
 
         public delegate void DodgeUsedDelegate();
         public event DodgeUsedDelegate DodgeUsedEvent;
@@ -198,10 +203,21 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
 
-            if (movementEnabled)
+
+            if (isDashing)
             {
-                Move();
-            }                   
+                // Apply dash movement.
+                Vector3 dashMovement = transform.forward * dashSpeed;
+                _controller.Move(dashMovement * Time.deltaTime);
+            }
+            else
+            {
+                if (movementEnabled)
+                {
+                    Move();
+                }
+            }
+                  
         }
 
 
@@ -303,7 +319,7 @@ namespace StarterAssets
         {
             if (canDodge)
             {
-
+                StartCoroutine(Dash());
                 Debug.Log("Dodge");
                 _animator.SetBool(_animIDDodge, true);
 
@@ -320,6 +336,17 @@ namespace StarterAssets
             
 
         }
+        private IEnumerator Dash()
+        {
+            isDashing = true;
+
+            // Wait for dash duration.
+            yield return new WaitForSeconds(dashDuration);
+
+            isDashing = false;
+        }
+
+
 
 
         public void EndDodge()

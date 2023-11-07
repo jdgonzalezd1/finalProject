@@ -301,7 +301,7 @@ namespace StarterAssets
 
         private void OnDodge()
         {
-            if (canDodge )
+            if (canDodge)
             {
 
                 Debug.Log("Dodge");

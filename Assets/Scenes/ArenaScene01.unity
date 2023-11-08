@@ -347,7 +347,7 @@ PrefabInstance:
     - target: {fileID: 6893471204583391247, guid: bb8451268b0551f40ba91a93f12225a7,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6955986125860179014, guid: bb8451268b0551f40ba91a93f12225a7,
         type: 3}
@@ -3353,6 +3353,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 4618599650713090570, guid: 346317142c102f241abd809057749bf7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3378,6 +3383,5 @@ SceneRoots:
   - {fileID: 1725284128}
   - {fileID: 1047675992}
   - {fileID: 360042024}
-  - {fileID: 60805127}
   - {fileID: 8315577136710108478}
   - {fileID: 2077752042}

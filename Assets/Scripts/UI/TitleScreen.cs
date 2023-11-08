@@ -14,11 +14,16 @@ public class TitleScreen : MonoBehaviour
 
     public GameObject mainUI;
     public GameObject creditsUI;
+    public GameObject optionsUI;
+
+    public Animator animUI;
 
     public void Start()
     {
+        animUI.SetBool("StartGame", false);
         mainUI.SetActive(true);
         creditsUI.SetActive(false);
+        optionsUI.SetActive(false);
         Time.timeScale = 1;
     }
 
@@ -51,7 +56,9 @@ public class TitleScreen : MonoBehaviour
     IEnumerator StartGameDelay()
     {
         mainUI.SetActive(false);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
+        animUI.SetBool("StartGame", true);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(1);
     }
 
@@ -70,6 +77,13 @@ public class TitleScreen : MonoBehaviour
     public void StartUI()
     {
         mainUI.SetActive(true);
-        creditsUI.SetActive(false);        
+        creditsUI.SetActive(false);  
+        optionsUI.SetActive(false);
+    }
+
+    public void OptionsUI()
+    {
+        mainUI.SetActive(false);
+        optionsUI.SetActive(true);
     }
 }

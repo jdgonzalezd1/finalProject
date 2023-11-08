@@ -31,7 +31,7 @@ public class EnemyNavigation : MonoBehaviour
 
     private void Update()
     {      
-        if (PauseMenu.instance.gamePause == false)
+        if (PauseMenu.instance.tutorialUI.activeInHierarchy == false)
         {
             Moving();
             locations = GetLocations();

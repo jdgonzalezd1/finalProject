@@ -30,10 +30,21 @@ public class EnemyNavigation : MonoBehaviour
     }
 
     private void Update()
-    {
-        locations = GetLocations();
-        Moving();
-        InitiateAttack(playerPosition.position);
+    {      
+        if (PauseMenu.instance.tutorialUI.activeInHierarchy == false)
+        {
+            Moving();
+            locations = GetLocations();
+            enemy.isStopped = false;
+            InitiateAttack(playerPosition.position);
+        }
+        else
+        {
+            enemy.isStopped = true;
+            animator.SetBool("isMoving", false);
+        }
+
+
     }
 
     private void Moving()

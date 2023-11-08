@@ -26,7 +26,7 @@ public class BossNavigation : MonoBehaviour
 
     private void Update()
     {
-        Movement();
+        //Movement();
     }
 
     private void Movement()

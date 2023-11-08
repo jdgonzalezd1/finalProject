@@ -1635,8 +1635,6 @@ GameObject:
   - component: {fileID: 809101129}
   - component: {fileID: 809101128}
   - component: {fileID: 809101126}
-  - component: {fileID: 809101131}
-  - component: {fileID: 809101132}
   - component: {fileID: 809101133}
   - component: {fileID: 809101134}
   m_Layer: 0
@@ -1734,39 +1732,6 @@ Transform:
   - {fileID: 1484713848}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &809101131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 809101125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 454d3d9a60b58e948a55c3c23f8ab820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossMovement: {fileID: 0}
-  distance: 0
-  isMoving: 0
-  player: {fileID: 0}
-  bossCon: {fileID: 0}
---- !u!114 &809101132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 809101125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ffa1dd0d06dfa42b275b7f6528ab6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossNavi: {fileID: 0}
-  attackCooldown: 0
-  isCasting: 0
-  isAttacking: 0
 --- !u!65 &809101133
 BoxCollider:
   m_ObjectHideFlags: 0

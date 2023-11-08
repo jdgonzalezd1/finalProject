@@ -25,16 +25,18 @@ namespace StarterAssets
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
-        public float DodgeSpeed = 4.0f; //
         private bool isDodging = false;//
         public bool canDodge; // 
 
-        private float dashSpeed = 20f; 
+        private float dashSpeed = 10f; 
         private float dashDuration = 0.2f; 
-        private bool isDashing;
+        public bool isDashing;
 
         public delegate void DodgeUsedDelegate();
         public event DodgeUsedDelegate DodgeUsedEvent;
+
+        private StaminaManagement stamina;
+        private HUD hud;
 
 
         [Tooltip("Sprint speed of the character in m/s")]
@@ -162,6 +164,11 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+
+            stamina = GetComponent<StaminaManagement>();
+
+
+            hud = FindAnyObjectByType<HUD>();
         }
 
         private void Start()
@@ -217,7 +224,28 @@ namespace StarterAssets
                     Move();
                 }
             }
-                  
+
+            if (_input.sprint)
+            {
+
+                stamina.stamina -= 0.1f; // Ajuste este valor según sea necesario.
+                hud.UpdateStaminaBar(stamina.stamina);
+
+                if (!stamina.isRecovering)
+                {
+                   
+                    StartCoroutine(stamina.StartStaminaRecovery());
+
+                }
+
+                // Si la stamina del jugador se agota, detiene la carrera.
+                if (stamina.stamina <= 0)
+                {
+                    stamina.stamina = 0;
+                    _input.sprint = false;
+                }
+            }
+
         }
 
 
@@ -324,7 +352,7 @@ namespace StarterAssets
                 _animator.SetBool(_animIDDodge, true);
 
                 isDodging = true;
-                MoveSpeed = DodgeSpeed;
+                
                 canDodge = true;
 
                 if (DodgeUsedEvent != null)

@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
     private Animator animator;
 
     public float health;
-    public int mana;
+    public float mana;
     public bool isAlive = true;
     
 
@@ -18,7 +18,12 @@ public class PlayerHealth : MonoBehaviour
 
     public float hurtDelay = 2f;
 
+    public bool isRecovering = false;
+
+    public float manaRecoveryRate = 5.0f;
+
     private InputTest inputTestInstance;
+    private ThirdPersonController thirdPersonController;
     private HUD hud;
 
     void Awake()
@@ -87,8 +92,35 @@ public class PlayerHealth : MonoBehaviour
             mana = 0;
             animator.SetBool("NoCast", true);
         }
+        
+
+        if (!isRecovering)
+        {
+            
+            StartCoroutine(StartManaRecovery());
+        }
 
         hud.UpdateManaBar(mana);
+    }
+
+    private IEnumerator StartManaRecovery()
+    {
+        isRecovering = true;
+        
+        while (mana < 700)
+        {
+            yield return new WaitForSeconds(2.0f);
+            Debug.Log("hola maracucho");
+            mana += manaRecoveryRate;
+            Debug.Log("hola meyeye");
+
+            if (mana > 700)
+            {
+                mana = 700;
+            }
+            hud.UpdateManaBar(mana);
+        }
+        isRecovering = false;
     }
 
 
@@ -103,6 +135,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+
+   
+
+
     public void ResetNoCast()
     {
         animator.SetBool("NoCast", false);
@@ -110,7 +146,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void Attacked(float damage)
     {
-        StartCoroutine(canBeHurtDelay(damage));
+       
+        
+           StartCoroutine(canBeHurtDelay(damage));
+        
+        
     }
 
 

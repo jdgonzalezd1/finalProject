@@ -7,7 +7,7 @@ public class StaminaManagement : MonoBehaviour
 {
     public float stamina = 0;
 
-    private bool isRecovering = false;
+    public bool isRecovering = false;
 
     public float staminaRecoveryRate = 5.0f;
 
@@ -48,12 +48,12 @@ public class StaminaManagement : MonoBehaviour
     }
 
 
-    private IEnumerator StartStaminaRecovery()
+    public IEnumerator StartStaminaRecovery()
     {
         isRecovering = true;
         while (stamina < 100)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.0f);
             stamina += staminaRecoveryRate;
 
             if (stamina >= 35)

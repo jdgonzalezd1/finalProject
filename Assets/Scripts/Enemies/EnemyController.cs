@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemyNavigation attackStatus;
     [SerializeField] private EnemyNavigation targetStatus;
     [SerializeField] private PlayerHealth player;
+    [SerializeField] private ThirdPersonController thirdPersonController;
 
     private void Start()
     {
@@ -31,7 +33,7 @@ public class EnemyController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Collided");
-        if (attackStatus.IsAttacking && other.gameObject.CompareTag("Player"))
+        if (attackStatus.IsAttacking && other.gameObject.CompareTag("Player") && !thirdPersonController)
         {
             player.Attacked(damage);
         }

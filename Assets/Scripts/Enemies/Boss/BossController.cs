@@ -53,7 +53,7 @@ public class BossController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             player.Attacked(damageDealt);
         }

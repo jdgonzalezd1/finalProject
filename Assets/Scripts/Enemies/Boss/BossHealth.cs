@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class BossHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] public float health;
+
+    [SerializeField] private HUD hud;
+
+    private void Awake()
     {
-        
+        hud = FindAnyObjectByType<HUD>();
+        health = 100;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(float damage)
     {
-        
+        health -= damage;
+        hud.UpdateBossHealth(health);
     }
 }

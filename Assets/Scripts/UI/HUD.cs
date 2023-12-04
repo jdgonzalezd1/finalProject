@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
 
     [SerializeField] private Slider manaBar;
     [SerializeField] private Slider staminaBar;
+    [SerializeField] private Slider bossHP;
 
     [SerializeField] private TextMeshProUGUI enemiesCount;
     [SerializeField] private TextMeshProUGUI waveCount;
@@ -20,17 +21,20 @@ public class HUD : MonoBehaviour
     [SerializeField] private GameObject winUI;
     [SerializeField] private GameManager gameManager;
 
-    [SerializeField] private PlayerHealth playerResources;
-    [SerializeField] private StaminaManagement playerStamina;
+    private PlayerHealth playerResources;
+    private StaminaManagement playerStamina;
+    private BossHealth bossHealth;
 
     private void Start()
     {
         playerResources = FindAnyObjectByType<PlayerHealth>();
         playerStamina = FindAnyObjectByType<StaminaManagement>();
+        bossHealth = FindAnyObjectByType<BossHealth>();
         gameManager = FindAnyObjectByType<GameManager>();
         UpdateHealthBar(playerResources.health);
         UpdateManaBar(playerResources.mana);
         UpdateStaminaBar(playerStamina.stamina);
+        UpdateBossHealth(bossHealth.health);
     }    
 
     private void Update()
@@ -96,6 +100,15 @@ public class HUD : MonoBehaviour
     public void UpdateWaveCount()
     {
         waveCount.text = "Wave\n" + gameManager.WaveCount.ToString() + "/" + gameManager.FinalWave.ToString();
+    }
+
+    public void UpdateBossHealth(float Bhealth)
+    {        
+        if (bossHP.maxValue < Bhealth)
+        {
+            bossHP.maxValue = Bhealth;
+        }
+        bossHP.value = Bhealth;
     }
 
     public void GameOver()

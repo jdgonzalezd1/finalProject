@@ -13,16 +13,16 @@ public class BossController : MonoBehaviour
     [SerializeField] private bool isCasting;
     [SerializeField] private bool isAttacking;
 
-    [SerializeField] private Animator animator;
-    [SerializeField] private PlayerHealth player;
+    //[SerializeField] private Animator animator;
+    //[SerializeField] private PlayerHealth player;
 
 
 
     private void Start()
     {
         bossNavi = GetComponent<BossNavigation>();
-        animator = GetComponent<Animator>();
-        player = FindAnyObjectByType<PlayerHealth>();
+        //animator = GetComponent<Animator>();
+        //player = FindAnyObjectByType<PlayerHealth>();
     }
     private void Update()
     {
@@ -51,15 +51,9 @@ public class BossController : MonoBehaviour
         set { attackCooldown = value; }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public float DamageDealt
     {
-        if (other.CompareTag("Player"))
-        {
-            player.Attacked(damageDealt);
-        }
+        get { return damageDealt; }
     }
-
-
-
 
 }

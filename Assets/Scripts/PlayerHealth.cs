@@ -95,8 +95,7 @@ public class PlayerHealth : MonoBehaviour
         
 
         if (!isRecovering)
-        {
-            
+        {            
             StartCoroutine(StartManaRecovery());
         }
 
@@ -109,10 +108,8 @@ public class PlayerHealth : MonoBehaviour
         
         while (mana < 700)
         {
-            yield return new WaitForSeconds(2.0f);
-            Debug.Log("hola maracucho");
-            mana += manaRecoveryRate;
-            Debug.Log("hola meyeye");
+            yield return new WaitForSeconds(2.0f);            
+            mana += manaRecoveryRate;            
 
             if (mana > 700)
             {
@@ -126,12 +123,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void SpellUsed()
     {
-
         if (mana > 0)
-        {
-            
-            DecrementMana(25);
-            
+        {            
+            DecrementMana(25);            
         }
     }
 
@@ -145,12 +139,8 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void Attacked(float damage)
-    {
-       
-        
-           StartCoroutine(canBeHurtDelay(damage));
-        
-        
+    {    
+           StartCoroutine(canBeHurtDelay(damage));  
     }
 
 

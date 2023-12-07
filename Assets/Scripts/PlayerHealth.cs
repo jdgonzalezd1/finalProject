@@ -128,8 +128,6 @@ public class PlayerHealth : MonoBehaviour
             DecrementMana(25);            
         }
     }
-
-
    
 
 
